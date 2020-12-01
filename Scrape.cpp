@@ -29,8 +29,11 @@ void scrape(const Stocks& stocks, EzCurl& EzCurl)
     //
     // build base url for nasd Time and Sales
     // http://www.nasdaq.com/symbol/ms/time-sales?time=1&pageno=3
+    // https: !!
     //
-    static const string root{"http://www.nasdaq.com/symbol/"};
+//    static const string root{"https://www.nasdaq.com/symbol/"};
+    static const string root{"https://old.nasdaq.com/symbol/"};
+    static const string tsl0{"/time-sales"};
     static const string tsls{"/time-sales?time="};
     static const string pgnos{"&pageno="};
 
@@ -40,16 +43,16 @@ void scrape(const Stocks& stocks, EzCurl& EzCurl)
     static const int ptest{3};
     int itest{0};
     int iptest{0};
-    for (auto& stock: stocks) {
+    for (auto &stock: stocks) {
         Trades trds;
         // static const string eloc{"http://www.nasdaq.com/symbol/SYMBOL/time-sales?time=1"};
         string symbol{stock.first};
-        string eloc = root+symbol += tsls;
+        string eloc = root + symbol += tsls;
 
         // drop-down list of times of day
         // eleven by end of day
-        for (int it = 1; it<=11; ++it) {
-            string loc = eloc+std::to_string(it);
+        for (int it = 1; it <= 11; ++it) {
+            string loc = eloc + std::to_string(it);
 //            if (itest++ == ntest) return;
             //
             ////////////////////////////////////////////////////////////////////////////////////
@@ -197,7 +200,7 @@ void scrape(const Stocks& stocks, Multi& mc)
     // build base url for nasd Time and Sales
     // http://www.nasdaq.com/symbol/ms/time-sales?time=1&pageno=3
     //
-    static const string root{"http://www.nasdaq.com/symbol/"};
+    static const string root{"http://old.nasdaq.com/symbol/"};
     static const string tsls{"/time-sales?time="};
     static const string pgnos{"&pageno="};
 
@@ -277,14 +280,14 @@ void scrape(const Stocks& stocks, Multi& mc)
             while (!tim_urls.empty()) {
                 mc.load(tim_urls);
                 ResVec tim_rslts{mc.do_perform(tim_urls)};
-                for (auto e : tim_rslts) {
+                for (auto &e : tim_rslts) {
                     doc_file = e.second;
                     HtmlDoc Nasd2{doc_file};
                     //
                     // Get the page date which will be used to create date-time for each trade
                     //
                     static const string span{"qwidget_markettime"};
-                    Xpath spid = "//span[@id='"+span+"']";
+                    Xpath spid = "//span[@id='" + span + "']";
                     Nasd2.GetNodeset(spid);
                     string pdate;
                     if (Nasd2.result()) {
@@ -364,16 +367,16 @@ void scrape(const Stocks& stocks, Multi& mc)
                         auto trades{trds.size()};
 //                        std::cout << trades << " trades for " << stock.first <<
 //                                                                             " time "<< it<<"\n" << endl;
-                        if(trades==0) break;
+                        if (trades == 0) break;
                     }
                 }
                 auto trades{trds.size()};
 //                std::cout << trades << " trades for " << stock.first <<  " page "<< "\n" << endl;
-                if(trades==0) break;
+                if (trades == 0) break;
             }
             auto trades{trds.size()};
             std::cout << trades << " trades for " << stock.first << "\n" << endl;
-            if(trades==0) break;
+            if (trades == 0) break;
         }
     }
 }

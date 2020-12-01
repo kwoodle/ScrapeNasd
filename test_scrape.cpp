@@ -1,11 +1,12 @@
 //
-// Created by kwoodle on 10/25/17.
+// Created by kwoodle on 11/25/19.
 //
-// Scrape Time and Sales for list of symbols from Nasd using, e.g.
+
+// Test Scrape Time and Sales for list of symbols from Nasd using, e.g.
 // http://www.nasdaq.com/symbol/ms/time-sales?time=1&pageno=3
 //
 
-#include "Scrape.h"
+#include "Scrape_test.h"
 #include <iostream>
 
 int main(int argc, char **argv) {
@@ -26,11 +27,11 @@ int main(int argc, char **argv) {
     // Scrape the pages
     //
     try {
-        Multi mc(app_name, true);
-        scrape(SandP, mc);
+//        Multi mc(app_name, true);
+//        scrape(SandP, mc);
 //        EzCurl ezCurl(10L);
 //        EzCurl ez(app_name, true);
-//        scrape(SandP, ez);
+        scrape(SandP);
 
     }
     catch (std::exception &e) {

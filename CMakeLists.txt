@@ -8,10 +8,9 @@ add_executable(ScrapeNasd main.cpp Scrape.h Stocks.cpp Scrape.cpp)
 include(/usr/local/lib/ktrade/cmake/ktrade-targets.cmake)
 target_link_libraries(ScrapeNasd Ktrd)
 
-set(BOOST_INCLUDEDIR "/usr/include")
 find_package(Boost 1.64 COMPONENTS date_time system filesystem)
 include_directories(${Boost_INCLUDE_DIRS})
 target_link_libraries(ScrapeNasd ${Boost_LIBRARIES})
-#   message(STATUS "Boost Version " ${Boost_VERSION})
-
+add_executable(TestScrape test_scrape.cpp Scrape_test.h Stocks.cpp Scrape_test.cpp)
+target_link_libraries(TestScrape Ktrd ${Boost_LIBRARIES})
 #add_definitions(-DBOOST_NETWORK_ENABLE_HTTPS)
